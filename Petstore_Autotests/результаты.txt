@@ -1,0 +1,90 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.1.0, pluggy-1.6.0 -- C:\Users\HONOR\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\HONOR\Desktop\Petstore_Autotests
+plugins: anyio-4.9.0
+collecting ... collected 7 items
+
+test_get_user.py::test_1_create_user 
+[ТЕСТ 1] Создание одного пользователя (POST /user)
+Отправляем запрос на создание пользователя autotestuser...
+РЕЗУЛЬТАТ: УСПЕШНО - Пользователь создан
+PASSED
+test_get_user.py::test_2_get_existing_user 
+[ТЕСТ 2] Получение существующего пользователя (GET /user)
+Ищем пользователя autotestuser...
+РЕЗУЛЬТАТ: УСПЕШНО - Пользователь найден, имя: autotestuser
+PASSED
+test_get_user.py::test_3_create_user_list 
+[ТЕСТ 3] Создание списка пользователей (POST /user/createWithList)
+Отправляем запрос на создание двух пользователей...
+РЕЗУЛЬТАТ: УСПЕШНО - Список пользователей создан
+PASSED
+test_get_user.py::test_4_get_nonexistent_user 
+[ТЕСТ 4] Получение несуществующего пользователя (негативный тест)
+Ищем пользователя ghostuser999 (которого не существует)...
+РЕЗУЛЬТАТ: УСПЕШНО - Сервер вернул 404, пользователь не найден
+PASSED
+test_get_user.py::test_5_create_user_without_username 
+[ТЕСТ 5] Создание пользователя без обязательного поля username (негативный тест)
+Отправляем JSON без поля username...
+РЕЗУЛЬТАТ: ОБНАРУЖЕН БАГ - Сервер создал пользователя без поля username
+FAILED
+test_get_user.py::test_6_create_user_empty_body 
+[ТЕСТ 6] Создание пользователя с пустым телом запроса (негативный тест)
+Отправляем POST запрос без тела...
+РЕЗУЛЬТАТ: УСПЕШНО - Сервер отклонил пустой запрос с кодом 405
+PASSED
+test_get_user.py::test_7_create_with_empty_list 
+[ТЕСТ 7] Создание списка с пустым массивом (негативный тест)
+Отправляем пустой массив [] в createWithList...
+РЕЗУЛЬТАТ: ОБНАРУЖЕН БАГ - Сервер вернул 200 на пустой массив
+FAILED
+
+================================== FAILURES ===================================
+_____________________ test_5_create_user_without_username _____________________
+
+    def test_5_create_user_without_username():
+        print("\n[ТЕСТ 5] Создание пользователя без обязательного поля username (негативный тест)")
+        print("Отправляем JSON без поля username...")
+        url = "https://petstore.swagger.io/v2/user"
+        payload = {
+            "id": 777,
+            "firstName": "Без",
+            "lastName": "Имени",
+            "email": "no_name@test.com"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+    
+        if response.status_code != 200:
+            print(f"РЕЗУЛЬТАТ: УСПЕШНО - Сервер отклонил запрос с кодом {response.status_code}")
+        else:
+            print("РЕЗУЛЬТАТ: ОБНАРУЖЕН БАГ - Сервер создал пользователя без поля username")
+    
+>       assert response.status_code != 200
+E       assert 200 != 200
+E        +  where 200 = <Response [200]>.status_code
+
+test_get_user.py:112: AssertionError
+________________________ test_7_create_with_empty_list ________________________
+
+    def test_7_create_with_empty_list():
+        print("\n[ТЕСТ 7] Создание списка с пустым массивом (негативный тест)")
+        print("Отправляем пустой массив [] в createWithList...")
+        url = "https://petstore.swagger.io/v2/user/createWithList"
+        response = requests.post(url, json=[], headers=headers)
+    
+        if response.status_code != 200:
+            print(f"РЕЗУЛЬТАТ: УСПЕШНО - Сервер отклонил пустой массив с кодом {response.status_code}")
+        else:
+            print("РЕЗУЛЬТАТ: ОБНАРУЖЕН БАГ - Сервер вернул 200 на пустой массив")
+    
+>       assert response.status_code != 200
+E       assert 200 != 200
+E        +  where 200 = <Response [200]>.status_code
+
+test_get_user.py:138: AssertionError
+=========================== short test summary info ===========================
+FAILED test_get_user.py::test_5_create_user_without_username - assert 200 != 200
+FAILED test_get_user.py::test_7_create_with_empty_list - assert 200 != 200
+========================= 2 failed, 5 passed in 9.31s =========================
