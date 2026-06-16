@@ -1,0 +1,93 @@
+{
+  "info": {
+    "_postman_id": "652f329d-73ed-45df-acc9-d506eae14099",
+    "name": "Petstore",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55580088",
+    "_collection_link": "https://go.postman.co/collection/55580088-652f329d-73ed-45df-acc9-d506eae14099?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "позитивные тесты",
+      "item": [
+        {
+          "name": "GET /user/{username}",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user/createWithList",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "негативные тесты",
+      "item": [
+        {
+          "name": "GET /user/{username}",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user - пустое тело",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user - невалидный JSON",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user - неверный тип данных",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user - отсутствие обязательного поля",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "POST /user/createWithList",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
